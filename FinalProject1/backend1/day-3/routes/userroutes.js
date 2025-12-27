@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); 
+const user = require('../models/user'); 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -124,5 +124,6 @@ router.delete('/:id', async (req, res) => {
 router.get('/test', (req, res) => {
   res.send('User API test route running!');
 });
+
 
 module.exports = router;
