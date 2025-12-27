@@ -1,15 +1,15 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/user');
 
 // Register
 const registerUser = async (req, res) => {
   try {
     console.log('REGISTER Handler called', req.body && { email: req.body.email, name: req.body.name });
     // usercontroller.js (registerUser function)
-const { name, mobile, address, email, password } = req.body;
-if (!name || !email || !password) return res.status(400).json({ message: 'name, email and password required' }); 
-// 👆 This check fails because 'name' is missing in req.body
+    const { name, mobile, address, email, password } = req.body;
+    if (!name || !email || !password) return res.status(400).json({ message: 'name, email and password required' });
+    // 👆 This check fails because 'name' is missing in req.body
     const existing = await User.findOne({ email: email.toLowerCase() });
     if (existing) return res.status(400).json({ message: 'User already exists' });
 
@@ -36,7 +36,7 @@ const loginUser = async (req, res) => {
     if (!email || !password) return res.status(400).json({ message: 'Email and password are required' });
 
     const user = await User.findOne({ email: email.toLowerCase() });
-    console.log('User from DB:', user ? { id: user._id, email: user.email, passwordHashStartsWith: user.password && user.password.slice(0,4) } : null);
+    console.log('User from DB:', user ? { id: user._id, email: user.email, passwordHashStartsWith: user.password && user.password.slice(0, 4) } : null);
 
     if (!user) {
       console.log('Login failed: user not found');
